@@ -25,7 +25,8 @@ const STORAGE_KEYS = {
   weeklyCalendar: "devale-weekly-calendar",
   contentAngles: "devale-content-angles",
   anglesTopic: "devale-angles-topic",
-  selectedModel: "devale-selected-model"
+  selectedModel: "devale-selected-model",
+  theme: "devale-theme"
 };
 
 const emptyProfile = {
@@ -84,13 +85,13 @@ function Dashboard({ profile, contentIdeas, calendar, angles, onNavigate, hasApi
 
   return (
     <div className="space-y-6">
-      <Card className="overflow-hidden p-6 lg:p-8">
+      <Card className="overflow-hidden p-3 sm:p-6 lg:p-8 border-transparent shadow-none bg-transparent xl:border-white/10 xl:shadow-glow xl:bg-panel">
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <p className="text-sm uppercase tracking-[0.24em] text-sky-300">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.24em] text-sky-300">
               Dashboard
             </p>
-            <h2 className="mt-3 max-w-2xl text-4xl font-semibold tracking-tight text-white">
+            <h2 className="mt-3 max-w-2xl text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-white">
               Build a developer content system that turns daily work into inbound credibility.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
@@ -167,6 +168,7 @@ export default function App() {
   const [profile, setProfile] = useState(emptyProfile);
   const [apiKey, setApiKey] = useState("");
   const [selectedModel, setSelectedModel] = useState("gemini-2.5-flash");
+  const [theme, setTheme] = useState("light");
   const [dailyPrompt, setDailyPrompt] = useState("");
   const [contentIdeas, setContentIdeas] = useState([]);
   const [weeklyCalendar, setWeeklyCalendar] = useState([]);
@@ -189,6 +191,12 @@ export default function App() {
     setProfile(readStorage(STORAGE_KEYS.profile, emptyProfile));
     setApiKey(readStorage(STORAGE_KEYS.apiKey, ""));
     setSelectedModel(readStorage(STORAGE_KEYS.selectedModel, "gemini-2.5-flash"));
+    
+    const savedTheme = readStorage(STORAGE_KEYS.theme, "light");
+    setTheme(savedTheme);
+    if (savedTheme === "dark") document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+    
     setDailyPrompt(readStorage(STORAGE_KEYS.dailyPrompt, ""));
     setContentIdeas(readStorage(STORAGE_KEYS.contentIdeas, []));
     setWeeklyCalendar(readStorage(STORAGE_KEYS.weeklyCalendar, []));
@@ -258,6 +266,14 @@ export default function App() {
     setSelectedModel(nextModel);
     saveStorage(STORAGE_KEYS.selectedModel, nextModel);
     pushToast("success", "Model applied", `Now using ${nextModel}.`);
+  };
+
+  const handleToggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    saveStorage(STORAGE_KEYS.theme, nextTheme);
+    if (nextTheme === "dark") document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
   };
 
   const handleGenerateContent = async () => {
@@ -396,6 +412,7 @@ export default function App() {
     setProfile(emptyProfile);
     setApiKey("");
     setSelectedModel("gemini-2.5-flash");
+    setTheme("light");
     setDailyPrompt("");
     setContentIdeas([]);
     setWeeklyCalendar([]);
@@ -422,7 +439,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-hero-grid">
-      <div className="mx-auto max-w-[1600px] px-4 py-6 lg:px-6 lg:py-8">
+      <div className="mx-auto max-w-[1600px] px-4 py-6 pb-36 lg:px-6 lg:py-8 xl:pb-8">
         <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
           <Sidebar
             activeView={activeView}
@@ -490,6 +507,8 @@ export default function App() {
               <Settings
                 apiKey={apiKey}
                 selectedModel={selectedModel}
+                theme={theme}
+                onToggleTheme={handleToggleTheme}
                 onSaveApiKey={handleSaveApiKey}
                 onSaveModel={handleSaveModel}
                 onResetProfile={handleResetProfile}
@@ -500,7 +519,7 @@ export default function App() {
         </div>
       </div>
 
-      <div className="fixed bottom-4 right-4 z-50 flex w-full max-w-sm flex-col gap-3 px-4">
+      <div className="fixed top-4 xl:top-6 right-4 z-50 flex w-full max-w-sm flex-col gap-3 px-4">
         {toasts.map((toast) => (
           <Toast key={toast.id} toast={toast} onDismiss={dismissToast} />
         ))}

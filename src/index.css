@@ -5,6 +5,32 @@
 @tailwind utilities;
 
 :root {
+  --c-surface: 248, 250, 252;
+  --c-panel: 255, 255, 255;
+  --c-line: 226, 232, 240;
+  --c-muted: 100, 116, 139;
+  --c-accent: 71, 85, 105;
+  --c-accent-strong: 15, 23, 42;
+  --c-text: 15, 23, 42;
+  
+  --bg-gradient: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.98));
+  --grid-bg: linear-gradient(rgba(100, 116, 139, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(100, 116, 139, 0.06) 1px, transparent 1px);
+  color-scheme: light;
+}
+
+.dark {
+  --c-surface: 0, 0, 0;
+  --c-panel: 25, 25, 27;
+  --c-line: 74, 73, 73;
+  --c-muted: 166, 165, 164;
+  --c-accent: 206, 206, 206;
+  --c-accent-strong: 234, 234, 234;
+  --c-text: 234, 234, 234;
+  
+  --bg-gradient: radial-gradient(circle at top, rgba(234, 234, 234, 0.05), transparent 28%), linear-gradient(180deg, #19191b 0%, #000000 100%);
+  --glass-bg: linear-gradient(180deg, rgba(25, 25, 27, 0.88), rgba(0, 0, 0, 0.9));
+  --grid-bg: linear-gradient(rgba(166, 165, 164, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(166, 165, 164, 0.05) 1px, transparent 1px);
   color-scheme: dark;
 }
 
@@ -17,10 +43,8 @@ body,
 body {
   margin: 0;
   font-family: "Manrope", system-ui, sans-serif;
-  background:
-    radial-gradient(circle at top, rgba(56, 189, 248, 0.1), transparent 28%),
-    linear-gradient(180deg, #0b1220 0%, #050914 100%);
-  color: #eff6ff;
+  background: var(--bg-gradient);
+  color: rgb(var(--c-text));
 }
 
 * {
@@ -28,8 +52,8 @@ body {
 }
 
 ::selection {
-  background: rgba(125, 211, 252, 0.28);
-  color: #f8fafc;
+  background: rgba(var(--c-text), 0.2);
+  color: rgb(var(--c-surface));
 }
 
 ::-webkit-scrollbar {
@@ -38,23 +62,21 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f1726;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #24314b;
+  background: rgba(var(--c-line), 0.5);
   border-radius: 999px;
 }
 
 .glass-panel {
-  background: linear-gradient(180deg, rgba(20, 29, 47, 0.88), rgba(13, 19, 32, 0.9));
+  background: var(--glass-bg);
   backdrop-filter: blur(18px);
 }
 
 .soft-grid {
-  background-image:
-    linear-gradient(rgba(139, 154, 181, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 154, 181, 0.06) 1px, transparent 1px);
+  background-image: var(--grid-bg);
   background-size: 24px 24px;
 }
 

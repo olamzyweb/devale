@@ -3,18 +3,18 @@ import { CheckCircle2, AlertCircle, X } from "lucide-react";
 const toastStyles = {
   success: {
     icon: CheckCircle2,
-    accent: "border-emerald-400/20 bg-emerald-500/10 text-emerald-100",
-    iconColor: "text-emerald-300"
+    accent: "border-success bg-panel shadow-2xl",
+    iconColor: "text-success"
   },
   error: {
     icon: AlertCircle,
-    accent: "border-rose-400/20 bg-rose-500/10 text-rose-100",
-    iconColor: "text-rose-300"
+    accent: "border-danger bg-panel shadow-2xl",
+    iconColor: "text-danger"
   },
   info: {
     icon: CheckCircle2,
-    accent: "border-sky-400/20 bg-sky-500/10 text-sky-100",
-    iconColor: "text-sky-300"
+    accent: "border-sky-400 bg-panel shadow-2xl",
+    iconColor: "text-sky-500"
   }
 };
 
@@ -30,7 +30,7 @@ export default function Toast({ toast, onDismiss }) {
       <div className="min-w-0 flex-1">
         <p className="text-sm font-semibold">{toast.title}</p>
         {toast.message ? (
-          <p className="mt-1 text-sm text-slate-200/85">{toast.message}</p>
+          <p className="mt-1 text-sm opacity-80">{toast.message}</p>
         ) : null}
       </div>
       <button

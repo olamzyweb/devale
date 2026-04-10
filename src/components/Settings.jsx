@@ -7,6 +7,8 @@ import Button from "./ui/Button";
 export default function Settings({
   apiKey,
   selectedModel,
+  theme,
+  onToggleTheme,
   onSaveApiKey,
   onSaveModel,
   onResetProfile,
@@ -108,21 +110,36 @@ export default function Settings({
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/8 bg-slate-950/35 p-5">
-            <h3 className="text-lg font-semibold text-white">Workspace reset</h3>
-            <p className="mt-2 text-sm text-slate-400">
-              Clear local profile data or wipe generated content if you want a fresh start.
-            </p>
+          <div className="flex flex-col gap-6">
+            <div className="rounded-3xl border border-white/8 bg-slate-950/35 p-5">
+              <h3 className="text-lg font-semibold text-white">Appearance</h3>
+              <p className="mt-2 text-sm text-slate-400">
+                Toggle between Light and Dark mode.
+              </p>
 
-            <div className="mt-6 grid gap-3">
-              <Button variant="secondary" onClick={onClearContent}>
-                <RefreshCcw className="h-4 w-4" />
-                Clear generated content
-              </Button>
-              <Button variant="danger" onClick={onResetProfile}>
-                <Trash2 className="h-4 w-4" />
-                Reset profile and key
-              </Button>
+              <div className="mt-6 flex gap-3">
+                <Button variant="secondary" onClick={onToggleTheme}>
+                  {theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                </Button>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/8 bg-slate-950/35 p-5">
+              <h3 className="text-lg font-semibold text-white">Workspace reset</h3>
+              <p className="mt-2 text-sm text-slate-400">
+                Clear local profile data or wipe generated content if you want a fresh start.
+              </p>
+
+              <div className="mt-6 grid gap-3">
+                <Button variant="secondary" onClick={onClearContent}>
+                  <RefreshCcw className="h-4 w-4" />
+                  Clear generated content
+                </Button>
+                <Button variant="danger" onClick={onResetProfile}>
+                  <Trash2 className="h-4 w-4" />
+                  Reset profile and key
+                </Button>
+              </div>
             </div>
           </div>
         </div>
